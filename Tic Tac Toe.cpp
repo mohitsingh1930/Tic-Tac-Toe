@@ -23,40 +23,41 @@ vector<string> Assign(int a, vector<string> s, int x)
     }
     return s;
 }
-void check(vector<string> a)
+int check(vector<string> a)
 {
     for(int i=1;i<11;i=i+4)
     {
         if(a[i][1]==a[i][5] && a[i][5]==a[i][9])
         {
             if(a[i][1]=='X')
-                {cout<<"Player 2 Wins";exit(1);}
+                {cout<<"Player 2 Wins";return 1;}
             if(a[i][1]=='O')
-                {cout<<"Player 1 Wins";exit(1);}
+                {cout<<"Player 1 Wins";return 1;}
         }
         if(a[1][i]==a[5][i] && a[5][i]==a[9][i])
         {
             if(a[1][i]=='X')
-                {cout<<"Player 2 Wins";exit(1);}
+                {cout<<"Player 2 Wins";return 1;}
             if(a[1][i]=='O')
-                {cout<<"Player 1 Wins";exit(1);}
+                {cout<<"Player 1 Wins";return 1;}
         }
     }
     if(a[1][1]==a[5][5] && a[5][5]==a[9][9])
     {   if(a[1][1]=='X')
-                {cout<<"Player 2 Wins";exit(1);}
+                {cout<<"Player 2 Wins";return 1;}
         if(a[1][1]=='O')
-                {cout<<"Player 1 Wins";exit(1);}
+                {cout<<"Player 1 Wins";return 1;}
     }
     if(a[1][9]==a[5][5] && a[5][5]==a[9][1])
     {   if(a[1][9]=='X')
-                {cout<<"Player 2 Wins";exit(1);}
+                {cout<<"Player 2 Wins";return 1;}
         if(a[1][9]=='O')
-                {cout<<"Player 1 Wins";exit(1);}
+                {cout<<"Player 1 Wins";return 1;}
     }
+    return 0;
 }
 int main() {
-    int input;
+    int input, j=0;
     int win=0;
     vector<string> s;
     s.push_back("   |   |   ");
@@ -73,20 +74,25 @@ int main() {
     for(int i=0;i<s.size();i++)
         cout<<s[i]<<endl;
     do{
-        for(int i=1;i<3;i++)
+        j++;
+        for(int i=1;i<3 && win!=1;i++)
         {
-        cout<<"Player "<<i<<">> ";
-        cin>>input;
-        if(input>=1 && input<=9)
-        {
-            s=Assign(input, s, i);
-            for(int i=0;i<s.size();i++)
-            cout<<s[i]<<endl;
-            cout<<endl;check(s);
+            cout<<"Player "<<i<<">> ";
+            cin>>input;
+            if(input>=1 && input<=9)
+            {
+                s=Assign(input, s, i);
+                for(int i=0;i<s.size();i++)
+                cout<<s[i]<<endl;
+                cout<<endl;
+                win = check(s);
+            }
+            else
+            {
+                cout<<"invalid input";continue;
+            }
         }
-        else
-        {cout<<"invalid input";continue;}
-        }
-    }while(win!=1);
+    }while(win!=1 && j<=9);
+    system("pause");
     return 0;
 }
